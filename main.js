@@ -48,3 +48,11 @@ for (cell of cells) {
 // mousedown
 // mouseover = hover
 // (col) => col.target.style.background = "black"
+
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", () => {
+    const cellPaints = document.querySelectorAll(".col[style]");
+    for (cell of cellPaints) {
+            cell.removeAttribute("style");
+        }
+    });
