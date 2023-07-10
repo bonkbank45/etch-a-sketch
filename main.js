@@ -23,16 +23,28 @@ function insertRowToContainer(row) {
     container.appendChild(row);
 }
 
-for (let i = 0; i < 32; i++) {
-    insertRowToContainer(insertColToRow(createRow(), 32));
+for (let i = 0; i < 16; i++) {
+    insertRowToContainer(insertColToRow(createRow(), 16));
 }
 
-const paintRow = document.getElementsByClassName("col");
+const cells = document.getElementsByClassName("col");
+const containerWrap = document.getElementsByClassName("container-wrap");
+containerWrap[0].addEventListener("mouseup", () => {holdState = false;})
 
-for (col of paintRow) {
-    col.addEventListener("mousedown", (col) => col.target.style.background = "black");
+let holdState = false;
+for (cell of cells) {
+    cell.addEventListener("mousedown", (event) => {
+        holdState = true;
+        event.target.style.background = "black";
+    });
+    cell.addEventListener("mouseup", () => {holdState = false;}); 
+    cell.addEventListener("mouseover", (event) => {
+        if(holdState) {
+            event.target.style.background = "black";
+        }
+    });
 }
 
-
-
-
+// mousedown
+// mouseover = hover
+// (col) => col.target.style.background = "black"
