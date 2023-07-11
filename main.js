@@ -40,10 +40,6 @@ function changeGridSize() {
 
 }
 
-for (let i = 0; i < 32; i++) {
-    insertRowToContainer(insertColToRow(createRow(), 32));
-}
-
 function changeSizeGrid(amount) {
     const difference = amount - container.childElementCount;
     let previousRow = document.getElementsByClassName("row");
@@ -91,3 +87,7 @@ slider.addEventListener("input", (event) => {
     outputSizeGrid.textContent = `${event.target.value} x ${event.target.value}`;
     changeSizeGrid(event.target.value);
 });
+
+for (let i = 0; i < 32; i++) {
+    insertRowToContainer(insertColToRow(createRow(), 32));
+}
