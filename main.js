@@ -1,3 +1,6 @@
+let pen = true;
+let eraser = false;
+
 const container = document.getElementById("container-row-col");
 const slider = document.getElementById("myRange");
 let outputSizeGrid = document.getElementById("grid-size-show");
@@ -14,12 +17,22 @@ function createCol() {
     col.classList.add("col")
     col.addEventListener("mousedown", (event) => {
         holdState = true;
-        event.target.style.background = "black";
+        if (pen) {
+            event.target.style.background = "black";
+        }
+        if (eraser) {
+            col.removeAttribute("style");
+        }
     });
     col.addEventListener("mouseup", () => {holdState = false;}); 
     col.addEventListener("mouseover", (event) => {
         if(holdState) {
-            event.target.style.background = "black";
+            if (pen) {
+                event.target.style.background = "black";
+            }
+            if (eraser) {
+                col.removeAttribute("style");
+            }
         }
     });
     return col;
@@ -36,40 +49,60 @@ function insertRowToContainer(row) {
     container.appendChild(row);
 }
 
-function changeGridSize() {
+function changeSizeGrid(amount) {
+    const difference = amount - container.childElementCount;
+    let previousGrid = document.getElementsByClassName("row");
+    reset();
+    if (container.childElementCount < amount) {
+        addGrid(previousGrid, difference, amount);
+    }
+    if (container.childElementCount > amount){
+        removeGrid(previousGrid, difference);
+    }
+}
+
+function addGrid(previousGrid, difference, amountCol) {
+    for (row of previousGrid) {
+        for (let i = 0; i < difference; i++) {
+        row.appendChild(createCol());
+        }
+    }
+    for (let i = 0; i < difference; i++) {
+        insertRowToContainer(insertColToRow(createRow(), amountCol));
+    }
+}
+
+function removeGrid(previousGrid, difference) {
+    for (row of previousGrid) {
+        for (let i = 0; i > difference; i--) {
+        row.removeChild(row.firstChild);
+        }
+    }
+    for (let i = 0; i > difference; i--) {
+        container.removeChild(container.firstChild);
+    }
+}
+
+function selectBrush() {
 
 }
 
-function changeSizeGrid(amount) {
-    const difference = amount - container.childElementCount;
-    let previousRow = document.getElementsByClassName("row");
-    reset();
-    if (container.childElementCount < amount) {
-        for (row of previousRow) {
-            for (let i = 0; i < difference; i++) {
-            row.appendChild(createCol());
-            }
-        }
-        for (let i = 0; i < difference; i++) {
-            insertRowToContainer(insertColToRow(createRow(), amount));
-        }
-    }
-    if (container.childElementCount > amount){
-        for (row of previousRow) {
-            for (let i = 0; i > difference; i--) {
-            row.removeChild(row.firstChild);
-            }
-        }
-        for (let i = 0; i > difference; i--) {
-            container.removeChild(container.firstChild);
-        }
-    }
+function penBrush() {
+
+}
+
+function eraserBrush() {
+
+}
+
+function rainbowBrush() {
+
 }
 
 function reset() {
-    const cellPaints = document.querySelectorAll(".col[style]");
-    for (cell of cellPaints) {
-            cell.removeAttribute("style");
+    const gridPaints = document.querySelectorAll(".col[style]");
+    for (gridPaint of gridPaints) {
+            gridPaint.removeAttribute("style");
     }
 }
 
@@ -81,6 +114,20 @@ containerWrap[0].addEventListener("mouseup", () => {holdState = false;})
 
 const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", reset);
+
+const eraserButton = document.getElementById("eraser");
+eraserButton.addEventListener("click", () => {
+    pen = false;
+    eraser = true;
+});
+
+const penButton = document.getElementById("pen");
+penButton.addEventListener("click", () => {
+    pen = true;
+    eraser= false;
+});
+
+const color = document.getElementById("current-color");
 
 outputSizeGrid.textContent = `${slider.value} x ${slider.value}`;
 slider.addEventListener("input", (event) => {

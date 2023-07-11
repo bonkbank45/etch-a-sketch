@@ -18,6 +18,17 @@ body {
     border: 3px solid rgb(77, 77, 77);
 }
 
+#container-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button-basic {
+    padding: 10px 25px;
+}
+
 .wrap-sketch-slide {
     display: flex;
     flex-direction: column;
@@ -32,6 +43,10 @@ body {
     border: 1px solid rgb(199, 199, 199);
     flex: 1;
     user-select: none;
+}
+
+.color-picker {
+    width: 100%;
 }
 
 .slidecontainer {
