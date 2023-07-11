@@ -4,6 +4,7 @@ let eraser = false;
 const container = document.getElementById("container-row-col");
 const slider = document.getElementById("myRange");
 let outputSizeGrid = document.getElementById("grid-size-show");
+let colorPicker = document.getElementById("currentColor");
 
 function createRow() {
     const row = document.createElement("div");
@@ -15,26 +16,7 @@ let holdState = false;
 function createCol() {
     const col = document.createElement("div");
     col.classList.add("col")
-    col.addEventListener("mousedown", (event) => {
-        holdState = true;
-        if (pen) {
-            event.target.style.background = "black";
-        }
-        if (eraser) {
-            col.removeAttribute("style");
-        }
-    });
-    col.addEventListener("mouseup", () => {holdState = false;}); 
-    col.addEventListener("mouseover", (event) => {
-        if(holdState) {
-            if (pen) {
-                event.target.style.background = "black";
-            }
-            if (eraser) {
-                col.removeAttribute("style");
-            }
-        }
-    });
+    changeColor(col);
     return col;
 }
 
@@ -83,20 +65,21 @@ function removeGrid(previousGrid, difference) {
     }
 }
 
-function selectBrush() {
 
-}
-
-function penBrush() {
-
-}
-
-function eraserBrush() {
-
-}
-
-function rainbowBrush() {
-
+function changeColor(col) {
+    col.addEventListener("mousedown", (event) => {
+        holdState = true;
+        if (pen) {
+            event.target.style.background = colorPicker.value;}
+        if (eraser) { col.removeAttribute("style"); }
+    });
+    col.addEventListener("mouseup", () => {holdState = false;}); 
+    col.addEventListener("mouseover", (event) => {
+        if(holdState) {
+            if (pen) { event.target.style.background = colorPicker.value; }
+            if (eraser) { col.removeAttribute("style"); }
+        }
+    });
 }
 
 function reset() {
@@ -127,7 +110,13 @@ penButton.addEventListener("click", () => {
     eraser= false;
 });
 
-const color = document.getElementById("current-color");
+
+colorPicker.addEventListener("change", (event) => {
+    const cols = document.getElementsByClassName("col");
+    for (col of cols) {
+        changeColor(col);
+    }
+}, false);
 
 outputSizeGrid.textContent = `${slider.value} x ${slider.value}`;
 slider.addEventListener("input", (event) => {

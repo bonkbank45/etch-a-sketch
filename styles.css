@@ -40,7 +40,7 @@ body {
 }
 
 .col {
-    border: 1px solid rgb(199, 199, 199);
+    /*border: 1px solid rgb(199, 199, 199);*/
     flex: 1;
     user-select: none;
 }
@@ -73,11 +73,11 @@ body {
     appearance: none;
     width: 25px;
     height: 25px;
-    background: #04AA6D;
+    background: #ec5252;
 }
 
 .slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
+    background: #ec5252; /* Green background */
   }
