@@ -1,9 +1,15 @@
 html { 
+    box-sizing: border-box;
     background: url(./picture/pixel.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+html {
+    height: 100%;
+    width: 100%;
 }
 
 body {
@@ -13,7 +19,6 @@ body {
     height: 100vh;
     gap: 30px;
     font-family: 'Silkscreen', cursive;
-
 }
 
 h1 {
@@ -30,12 +35,6 @@ h1:hover {
     text-shadow: -0.04em 0.04em rgb(252, 137, 137), 
     -0.08em 0.08em rgb(206, 250, 135), 
     -0.12em 0.12em rgb(255, 246, 126);
-}
-
-header {
-    display: flex;
-    border: 5px solid black;
-    border-radius: 15px;
 }
 
 .button-basic {
