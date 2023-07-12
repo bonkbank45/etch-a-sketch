@@ -118,11 +118,8 @@ function setShade(rgbcolor,percent) { //#FF00AA
     let G = rgbcolor[1];
     let B = rgbcolor[2];
 
-    /* calculate by percent
-       and check if pure black 0 - 55 jump to 60
-       so it will light to gray instantly 
-    */
-    if (R > 55 && G > 55 && B >  55) {
+    // calculate by percent
+    if (R > 0 && G >= 0 && B >=  0) {
         R = R * ((100 + percent) / 100);
         G = G * ((100 + percent) / 100);
         B = B * ((100 + percent) / 100);
