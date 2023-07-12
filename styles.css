@@ -25,7 +25,7 @@ h1 {
     font-family: 'Bungee Shade', cursive;
     margin: 0 auto;
     text-align: center;
-    font-size: 4rem;
+    font-size: 3rem;
     color: black;
     letter-spacing: 0.2em;
     cursor: pointer;
@@ -44,6 +44,15 @@ h1:hover {
     font-size: 26px;
     border-radius: 15px;
     box-shadow: 7px 5px black;
+    transition: all 1s ease;
+}
+
+.button-basic:hover {
+    transform: scale(1.1);
+}
+
+.button-special:hover {
+    animation: horizontal-shaking 0.25s infinite;
 }
 
 .button-basic#pen {
@@ -64,7 +73,7 @@ h1:hover {
     font-size: 16px;
     border-radius: 15px;
     box-shadow: 7px 5px black;
-    color: white;
+    color: rgb(0, 0, 0);
     -webkit-text-stroke-width: 0.1px;
     -webkit-text-stroke-color: black;
 }
@@ -97,16 +106,14 @@ h1:hover {
 .special-text {
     text-align: center;
     background-color: rgb(209, 255, 148);
-    border: 5px solid rgb(77, 77, 77);
+    border: 5px solid rgb(19, 19, 19);
     border-radius: 15px;
     font-weight: 700;
 }
 
 .button-basic {
     padding: 10px 15px;
-    color: white;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
+    color: rgb(0, 0, 0);
 }
 
 .button-special {
@@ -117,6 +124,11 @@ h1:hover {
 .wrap-sketch-slide {
     display: flex;
     flex-direction: column;
+}
+
+.color-picker {
+    border-radius: 10px;
+    box-shadow: 7px 5px black;
 }
 
 .row {
@@ -154,6 +166,8 @@ h1:hover {
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
+    border: 5px solid black;
+    border-radius: 5px;
 }
 
 .slider:hover {
@@ -185,3 +199,11 @@ h1:hover {
     text-decoration: none;
     color: black;
 }
+
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+   }

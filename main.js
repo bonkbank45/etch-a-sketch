@@ -19,6 +19,11 @@ const slider = document.getElementById("myRange");
 let outputSizeGrid = document.getElementById("grid-size-show");
 let colorPicker = document.getElementById("currentColor");
 
+const audio1 = document.querySelector(`audio[data-sound="${1}"]`);
+const audio2 = document.querySelector(`audio[data-sound="${2}"]`);
+audio1.volume = 0.2;
+audio2.volume = 0.2;
+
 function createRow() {
     const row = document.createElement("div");
     row.classList.add("row");
@@ -139,12 +144,24 @@ function reset() {
     }
 }
 
+function playSound(sound) {
+    if (!sound) return; // stop the function from running all together
+        sound.currentTime = 0; // rewind to the start
+        sound.play();
+    if (!sound) return; // stop the function from running all together
+        sound.currentTime = 0; // rewind to the start
+        sound.play();
+}
+
 const cells = document.getElementsByClassName("col");
 const containerWrap = document.getElementsByClassName("container-wrap");
 containerWrap[0].addEventListener("mouseup", () => {holdState = false;})
 
 const resetButton = document.getElementById("reset");
-resetButton.addEventListener("click", reset);
+resetButton.addEventListener("click", () => {
+    playSound(audio1);
+    reset();
+});
 
 const eraserButton = document.getElementById("eraser");
 eraserButton.addEventListener("click", () => {
@@ -153,6 +170,8 @@ eraserButton.addEventListener("click", () => {
     state.darken = false;
     state.lighten = false;
     state.eraser = true;
+    audio1.volume = 0.2;
+    playSound(audio1);
 });
 
 const penButton = document.getElementById("pen");
@@ -162,6 +181,8 @@ penButton.addEventListener("click", () => {
     state.darken = false;
     state.lighten = false;
     state.pen = true;
+    audio1.volume = 0.2;
+    playSound(audio1);
 });
 
 const rainbowButton = document.getElementById("rainbow");
@@ -171,6 +192,8 @@ rainbowButton.addEventListener("click", () => {
     state.darken = false;
     state.lighten = false;
     state.rainbow = true;
+    audio2.volume = 0.2;
+    playSound(audio2);
 });
 
 const darkenButton = document.getElementById("darken");
@@ -180,6 +203,8 @@ darkenButton.addEventListener("click", () => {
     state.rainbow = false;
     state.lighten = false;
     state.darken = true;
+    audio2.volume = 0.2;
+    playSound(audio2);
 });
 
 const lightenButton = document.getElementById("lighten");
@@ -189,6 +214,8 @@ lightenButton.addEventListener("click", () => {
     state.rainbow = false;
     state.darken = false;
     state.lighten = true;
+    audio2.volume = 0.2;
+    playSound(audio2);
 });
 
 colorPicker.addEventListener("change", (event) => {
