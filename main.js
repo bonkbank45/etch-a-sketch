@@ -1,5 +1,12 @@
-let pen = true;
-let eraser = false;
+let statePen = true;
+let stateEraser = false;
+let stateRainbow = false;
+let holdState = false;
+let indexRainbow = 0;
+const RAINBOW_PALLETE = ["#33A8C7", "#52E3E1", "#A0E426", 
+                         "#FDF148", "#FFAB00", "#F77976", 
+                         "#F050AE", "#D883FF", "#9336FD"];
+
 
 const container = document.getElementById("container-row-col");
 const slider = document.getElementById("myRange");
@@ -12,7 +19,6 @@ function createRow() {
     return row;
 }
 
-let holdState = false;
 function createCol() {
     const col = document.createElement("div");
     col.classList.add("col")
@@ -65,19 +71,30 @@ function removeGrid(previousGrid, difference) {
     }
 }
 
+function stateBrush(event) {
+    if (statePen) {
+        event.target.style.background = colorPicker.value;}
+    else if (stateEraser) { col.removeAttribute("style"); }
+    else if (stateRainbow) {
+        if (indexRainbow < 9) {
+            event.target.style.background = RAINBOW_PALLETE[indexRainbow++];
+        } else {
+            indexRainbow = 0;
+            event.target.style.background = RAINBOW_PALLETE[indexRainbow++];
+        }
+    }
+}
+
 
 function changeColor(col) {
     col.addEventListener("mousedown", (event) => {
         holdState = true;
-        if (pen) {
-            event.target.style.background = colorPicker.value;}
-        if (eraser) { col.removeAttribute("style"); }
+        stateBrush(event);
     });
     col.addEventListener("mouseup", () => {holdState = false;}); 
     col.addEventListener("mouseover", (event) => {
         if(holdState) {
-            if (pen) { event.target.style.background = colorPicker.value; }
-            if (eraser) { col.removeAttribute("style"); }
+            stateBrush(event);
         }
     });
 }
@@ -100,16 +117,24 @@ resetButton.addEventListener("click", reset);
 
 const eraserButton = document.getElementById("eraser");
 eraserButton.addEventListener("click", () => {
-    pen = false;
-    eraser = true;
+    statePen = false;
+    stateRainbow = false;
+    stateEraser = true;
 });
 
 const penButton = document.getElementById("pen");
 penButton.addEventListener("click", () => {
-    pen = true;
-    eraser= false;
+    stateRainbow = false;
+    stateEraser= false;
+    statePen = true;
 });
 
+const rainbowButton = document.getElementById("rainbow");
+rainbowButton.addEventListener("click", () => {
+    statePen = false;
+    stateEraser= false;
+    stateRainbow = true;
+});
 
 colorPicker.addEventListener("change", (event) => {
     const cols = document.getElementsByClassName("col");
