@@ -1,18 +1,73 @@
+html { 
+    background: url(./picture/pixel.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-family: sans-serif;
     height: 100vh;
-    gap: 50px
+    gap: 30px;
+    font-family: 'Silkscreen', cursive;
+
 }
 
 h1 {
-    margin: 0;
-    margin-top: 10px;
-    text-align: center;
-    font-size: 5rem;
+    font-family: 'Bungee Shade', cursive;
+    margin: 0 auto;
+    margin-top: 30px;
+    font-size: 4rem;
     flex:1;
+    color: black;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+}
+
+h1:hover {
+    text-shadow: -0.04em 0.04em rgb(252, 137, 137), 
+    -0.08em 0.08em rgb(206, 250, 135), 
+    -0.12em 0.12em rgb(255, 246, 126);
+}
+
+header {
+    display: flex;
+    border: 5px solid black;
+    border-radius: 15px;
+}
+
+.button-basic {
+    cursor: pointer;
+    font-family: 'Silkscreen', cursive;
+    font-size: 26px;
+    border-radius: 15px;
+    box-shadow: 7px 5px black;
+}
+
+.button-basic#pen {
+    background-color: rgb(252, 137, 137);
+}
+
+.button-basic#reset {
+    background-color: rgb(206, 250, 135);
+}
+
+.button-basic#eraser {
+    background-color: rgb(255, 246, 126);
+}
+
+.button-special {
+    cursor: pointer;
+    font-family: 'Silkscreen', cursive;
+    font-size: 16px;
+    border-radius: 15px;
+    box-shadow: 7px 5px black;
+    color: white;
+    -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: black;
 }
 
 .container-wrap {
@@ -28,7 +83,8 @@ h1 {
     flex-direction: column;
     width: 500px;
     height: 500px;
-    border: 3px solid rgb(77, 77, 77);
+    border: 15px solid rgb(77, 77, 77);
+    border-radius: 15px;
 }
 
 #container-button {
@@ -40,10 +96,22 @@ h1 {
 
 .special-text {
     text-align: center;
+    background-color: rgb(209, 255, 148);
+    border: 5px solid rgb(77, 77, 77);
+    border-radius: 15px;
+    font-weight: 700;
 }
 
 .button-basic {
-    padding: 10px 25px;
+    padding: 10px 15px;
+    color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.button-special {
+    background-color: #FBDA61;
+    background-image: linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%);
 }
 
 .wrap-sketch-slide {
@@ -63,6 +131,12 @@ h1 {
     user-select: none;
 }
 
+.something {
+    border-radius: 15px;
+    background-color: rgb(209, 255, 148);
+    border: 5px solid rgb(77, 77, 77);
+}
+
 .color-picker {
     width: 100%;
 }
@@ -76,7 +150,7 @@ h1 {
     appearance: none;
     min-width: 300px;
     width: 25%;
-    height: 25px;
+    height: 5px;
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
