@@ -42,6 +42,7 @@ body {
 .col {
     /*border: 1px solid rgb(199, 199, 199);*/
     flex: 1;
+    background-color: rgb(255,255,255);
     user-select: none;
 }
 

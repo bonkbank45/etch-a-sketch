@@ -1,6 +1,8 @@
 let statePen = true;
 let stateEraser = false;
 let stateRainbow = false;
+let stateDarken = false;
+let stateLighten = false;
 let holdState = false;
 let indexRainbow = 0;
 const RAINBOW_PALLETE = ["#33A8C7", "#52E3E1", "#A0E426", 
@@ -22,7 +24,8 @@ function createRow() {
 function createCol() {
     const col = document.createElement("div");
     col.classList.add("col")
-    changeColor(col);
+    setColor(col);
+    col.style.background = "rgb(255,255,255)";
     return col;
 }
 
@@ -83,10 +86,15 @@ function stateBrush(event) {
             event.target.style.background = RAINBOW_PALLETE[indexRainbow++];
         }
     }
+    else if (stateDarken) {
+        event.target.style.background = setShade(returnSplitRgb(event.target.style.background), -10);
+    }
+    else if (stateLighten) {
+        event.target.style.background = setShade(returnSplitRgb(event.target.style.background),  10);
+    }
 }
 
-
-function changeColor(col) {
+function setColor(col) {
     col.addEventListener("mousedown", (event) => {
         holdState = true;
         stateBrush(event);
@@ -99,14 +107,62 @@ function changeColor(col) {
     });
 }
 
+function returnSplitRgb(value) {
+    return value.match(/\d{1,3}/g);
+}
+
+function setShade(rgbcolor,percent) { //#FF00AA
+
+    // get value int hex color
+    let R = rgbcolor[0];
+    let G = rgbcolor[1];
+    let B = rgbcolor[2];
+
+    /* calculate by percent
+       and check if pure black 0 - 55 jump to 60
+       so it will light to gray instantly 
+    */
+    if (R > 55 && G > 55 && B >  55) {
+        R = R * ((100 + percent) / 100);
+        G = G * ((100 + percent) / 100);
+        B = B * ((100 + percent) / 100);
+    } else {
+        R = G = B = 60;
+    }
+
+    /*
+
+    // check value rgb is valid or not
+    R = (R > 255) ? R : "0";
+    G = (G > 255) ? G : "0";
+    B = (B > 255) ? B : "0";
+
+    // round number
+    R = Math.round(R);
+    G = Math.round(G);
+    B = Math.round(B);
+
+    // valid 1 digit number and return to string
+    let RR = (R.toString().length === 1) ? "0"+ R.toString(16) : R.toString(16);
+    let GG = (G.toString().length === 1) ? "0"+ G.toString(16) : G.toString(16);
+    let BB = (B.toString().length === 1) ? "0"+ B.toString(16) : B.toString(16);
+    */
+
+    // round number
+    R = Math.floor(R);
+    G = Math.floor(G);
+    B = Math.floor(B);
+    
+    return `rgb(${R},${G},${B})`
+}
+
 function reset() {
     const gridPaints = document.querySelectorAll(".col[style]");
     for (gridPaint of gridPaints) {
-            gridPaint.removeAttribute("style");
+        gridPaint.style.background = "rgb(255,255,255)";
+        //gridPaint.removeAttribute("style");
     }
 }
-
-console.log(container.childElementCount);
 
 const cells = document.getElementsByClassName("col");
 const containerWrap = document.getElementsByClassName("container-wrap");
@@ -119,13 +175,17 @@ const eraserButton = document.getElementById("eraser");
 eraserButton.addEventListener("click", () => {
     statePen = false;
     stateRainbow = false;
+    stateDarken = false;
+    stateLighten = false;
     stateEraser = true;
 });
 
 const penButton = document.getElementById("pen");
 penButton.addEventListener("click", () => {
     stateRainbow = false;
-    stateEraser= false;
+    stateEraser = false;
+    stateDarken = false;
+    stateLighten = false;
     statePen = true;
 });
 
@@ -133,13 +193,33 @@ const rainbowButton = document.getElementById("rainbow");
 rainbowButton.addEventListener("click", () => {
     statePen = false;
     stateEraser= false;
+    stateDarken = false;
+    stateLighten = false;
     stateRainbow = true;
 });
+
+const darkenButton = document.getElementById("darken");
+darkenButton.addEventListener("click", () => {
+    statePen = false;
+    stateEraser= false;
+    stateRainbow = false;
+    stateLighten = false;
+    stateDarken = true;
+});
+
+const lightenButton = document.getElementById("lighten");
+lightenButton.addEventListener("click", () => {
+    statePen = false;
+    stateEraser= false;
+    stateRainbow = false;
+    stateDarken = false;
+    stateLighten = true;
+})
 
 colorPicker.addEventListener("change", (event) => {
     const cols = document.getElementsByClassName("col");
     for (col of cols) {
-        changeColor(col);
+        setColor(col);
     }
 }, false);
 
