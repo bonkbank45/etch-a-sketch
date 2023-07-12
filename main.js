@@ -122,13 +122,9 @@ function setShade(rgbcolor,percent) { //#FF00AA
     let G = rgbcolor[1];
     let B = rgbcolor[2];
     // calculate by percent
-    if (R > 0 && G >= 0 && B >=  0) {
-        R = R * ((100 + percent) / 100);
-        G = G * ((100 + percent) / 100);
-        B = B * ((100 + percent) / 100);
-    } else {
-        R = G = B = 60;
-    }
+    R = R * ((100 + percent) / 100);
+    G = G * ((100 + percent) / 100);
+    B = B * ((100 + percent) / 100);
 
     R = Math.floor(R);
     G = Math.floor(G);
