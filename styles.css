@@ -13,9 +13,6 @@ html {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     height: 100vh;
     gap: 30px;
     font-family: 'Silkscreen', cursive;
@@ -24,11 +21,12 @@ body {
 h1 {
     font-family: 'Bungee Shade', cursive;
     margin: 0 auto;
+    text-align: center;
     font-size: 4rem;
-    flex:1;
     color: black;
     letter-spacing: 0.2em;
     cursor: pointer;
+    margin-bottom: 20px;
 }
 
 h1:hover {
@@ -70,7 +68,6 @@ h1:hover {
 
 .container-wrap {
     display: flex;
-    flex: 1;
     justify-content: center;
     flex-wrap: wrap-reverse;
     gap: 50px;
@@ -173,9 +170,9 @@ h1:hover {
 }
 
 .footer-content {
+    padding: 25px;
     text-align: center;
     font-size: 24px;
-    flex-shrink: 0;
 }
 
 .fa.fa-github, .fa.fa-github:hover, .fa.fa-github:focus, .fa.fa-github:active {
