@@ -77,7 +77,7 @@ function removeGrid(previousGrid, difference) {
 function stateBrush(event) {
     if (statePen) {
         event.target.style.background = colorPicker.value;}
-    else if (stateEraser) { col.removeAttribute("style"); }
+    else if (stateEraser) { event.target.style.background = "rgb(255,255,255)" }
     else if (stateRainbow) {
         if (indexRainbow < 9) {
             event.target.style.background = RAINBOW_PALLETE[indexRainbow++];
