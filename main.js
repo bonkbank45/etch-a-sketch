@@ -13,7 +13,6 @@ const RAINBOW_PALLETE = ["#33A8C7", "#52E3E1", "#A0E426",
                          "#FDF148", "#FFAB00", "#F77976", 
                          "#F050AE", "#D883FF", "#9336FD"];
 
-
 const container = document.getElementById("container-row-col");
 const slider = document.getElementById("myRange");
 let outputSizeGrid = document.getElementById("grid-size-show");
@@ -32,15 +31,15 @@ function createRow() {
 
 function createCol() {
     const col = document.createElement("div");
-    col.classList.add("col")
-    addEventToCol(col);
+    col.classList.add("col");
     col.style.background = "rgb(255,255,255)";
     return col;
 }
 
 function insertColToRow(row, amount) {
     for (let i = 0; i < amount; i++) {
-        row.appendChild(createCol());
+        const col = createCol();
+        row.appendChild(col);
     }
     return row;
 }
@@ -83,34 +82,36 @@ function removeGrid(previousGrid, difference) {
     }
 }
 
-function stateBrush(event) {
+function stateBrush(col) {
     if (state.pen) {
-        event.target.style.background = colorPicker.value;}
-    else if (state.eraser) { event.target.style.background = "rgb(255,255,255)" }
+        col.target.style.background = colorPicker.value;}
+    else if (state.eraser) { col.target.style.background = "rgb(255,255,255)" }
     else if (state.rainbow) {
         if (indexRainbow < 9) {
-            event.target.style.background = RAINBOW_PALLETE[indexRainbow++];
+            col.target.style.background = RAINBOW_PALLETE[indexRainbow++];
         } else {
             indexRainbow = 0;
-            event.target.style.background = RAINBOW_PALLETE[indexRainbow++]; } }
+            col.target.style.background = RAINBOW_PALLETE[indexRainbow++]; } }
     else if (state.darken) {
-        event.target.style.background = setShade(returnSplitRgb(event.target.style.background), -10);}
+        col.target.style.background = setShade(returnSplitRgb(col.target.style.background), -10);
+        }
     else if (state.lighten) {
-        event.target.style.background = setShade(returnSplitRgb(event.target.style.background),  10);}
+        col.target.style.background = setShade(returnSplitRgb(col.target.style.background),  10);
+        }
 }
 
-function addEventToCol(col) {
-    col.addEventListener("mousedown", (event) => {
-        state.hold = true;
+container.addEventListener("mousedown", (event) => {
+    state.hold = true;
+    stateBrush(event);
+});
+
+container.addEventListener("mouseup", () => {state.hold = false;});
+
+container.addEventListener("mouseover", (event) => {
+    if(state.hold) {
         stateBrush(event);
-    });
-    col.addEventListener("mouseup", () => {state.hold = false;}); 
-    col.addEventListener("mouseover", (event) => {
-        if(state.hold) {
-            stateBrush(event);
-        }
-    });
-}
+    }
+});
 
 function returnSplitRgb(value) {
     return value.match(/\d{1,3}/g);
@@ -121,6 +122,11 @@ function setShade(rgbcolor,percent) { //#FF00AA
     let R = rgbcolor[0];
     let G = rgbcolor[1];
     let B = rgbcolor[2];
+
+    if (R <= 5) {
+        R = G = B = 10;
+    }
+
     // calculate by percent
     R = R * ((100 + percent) / 100);
     G = G * ((100 + percent) / 100);
@@ -151,7 +157,7 @@ function playSound(sound) {
 
 const cells = document.getElementsByClassName("col");
 const containerWrap = document.getElementsByClassName("container-wrap");
-containerWrap[0].addEventListener("mouseup", () => {holdState = false;})
+containerWrap[0].addEventListener("mouseup", () => {state.hold = false;})
 
 const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", () => {
@@ -213,13 +219,6 @@ lightenButton.addEventListener("click", () => {
     audio2.volume = 0.2;
     playSound(audio2);
 });
-
-colorPicker.addEventListener("change", (event) => {
-    const cols = document.getElementsByClassName("col");
-    for (col of cols) {
-        addEventToCol(col);
-    }
-}, false);
 
 outputSizeGrid.textContent = `${slider.value} x ${slider.value}`;
 slider.addEventListener("input", (event) => {

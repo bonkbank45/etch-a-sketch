@@ -94,6 +94,7 @@ h1:hover {
     height: 50vh;
     border: 15px solid rgb(77, 77, 77);
     border-radius: 15px;
+    cursor: crosshair;
 }
 
 #container-button {
